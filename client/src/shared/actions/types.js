@@ -1,0 +1,3 @@
+export const FETCH_MOVIES = 'FETCH_MOVIES';
+export const FILTER_MOVIES = 'FILTER_MOVIES';
+export const STORE_MOVIES = 'STORE_MOVIES';
