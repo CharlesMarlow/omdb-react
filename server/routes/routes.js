@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
-const getMovies = require('../api/api');
+const { getMoviesFromApi, getMoviesFromDb } = require('../api/api');
 
 const moviesSchema = require('../models/movies');
 
@@ -9,30 +9,42 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 
 // Store movies
-router.post('/', (req, res) => {
-    const movies = getMovies
+router.post('/', async (req, res) => {
+    const movies = await getMoviesFromApi()
+    let error = null;
 
-    return movies.map(item => {
-        let movie = new moviesSchema();
-        movie.title = title;
-        movie.director = director;
-        movie.plot = plot;
-        movie.poster = poster;
-    })
+    movies.map(async item => {
+        let movie = new moviesSchema(item);
 
-
-    const { title, director, plot, poster } = req.body;
-
-    movie.save(err => {
-        if (err) {
-            return res.status(400)
-                .send("Something went wrong");
+        try {
+            await movie.save((err, result) => {
+                if (err) {
+                    error = err;
+                }
+            })
+        } catch (err) {
+            res.status(400)
+                .send(err);
         }
-
-        return res.json({
-            success: true
-        })
     })
+    if (error) {
+        res.status(400).send(error);
+    } else {
+        res.status(200).json({
+            success: true,
+        });
+    }
+})
+
+// Get movies from DB
+router.get("/", async (req, res) => {
+    try {
+        const { search } = req.query;
+        const movies = await getMoviesFromDb(search)
+        res.status(200).send(movies);
+    } catch (err) {
+        res.send(err);
+    }
 })
 
 module.exports = router;
