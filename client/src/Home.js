@@ -11,6 +11,8 @@ const useStyles = makeStyles(theme => ({
 
 const Home = () => {
     const classes = useStyles();
+    const [movies, setMovies] = React.useState([]);
+
     return (
         <React.Fragment>
             <Header />
@@ -19,11 +21,10 @@ const Home = () => {
                 justifyContent="space-around"
                 alignItems="flex-start"
                 p={2}
-                width="100%"
             >
                 <section>
-                    <Search />
-                    <MoviesList />
+                    <Search setMovies={setMovies} />
+                    <MoviesList movies={movies} setMovies={setMovies} />
                 </section>
             </Box>
         </React.Fragment>

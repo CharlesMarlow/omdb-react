@@ -1,9 +1,8 @@
 import React from 'react';
-import axios from "axios";
 import MovieCard from './MovieCard';
-import { connect } from "react-redux";
 import {makeStyles} from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
+import { fetchMovies } from "../shared/api";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -20,30 +19,22 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const api = 'http://www.omdbapi.com/?s=space&type=movie&y=2001&apikey=9f01e2ba';
-
-
-const MoviesList = () => {
+const MoviesList = ({ movies, setMovies }) => {
     const classes = useStyles();
-    const [movies, setMovies] = React.useState([]);
-    const fetchMovies = () => {
-        axios.get(api).then((data) => {
-            console.log('===>>>', data.data.Search);
-            setMovies(data.data.Search)
-        });
+
+    const fetchMoviesLocal = async () => {
+        return fetchMovies();
     }
 
     React.useEffect(() => {
-        fetchMovies()
+        fetchMoviesLocal().then((data) => setMovies(data.data))
     }, []);
-
-    console.log('MOVIES', Object.values(movies));
 
     return (
         <div className={classes.container}>
-            <Grid container className={classes.root} spacing={2}>
+            <Grid container className={classes.root} spacing={4}>
                 <Grid item xs={12}>
-                    <Grid container justify="center" spacing={2}>
+                    <Grid container justify="center" spacing={6}>
                         {movies.map((movie, index) => (
                             <Grid key={index} item>
                                 <MovieCard  movie={movie} />

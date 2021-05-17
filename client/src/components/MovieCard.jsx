@@ -5,40 +5,29 @@ import {
     CardHeader,
     CardMedia,
     CardContent,
-    CardActions,
-    Avatar,
-    IconButton,
     Typography,
 } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import notAvailable from '../assets/not_available.jpg';
-
-// const notAvailable = require("../assets/not_available.jpg");
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: 345,
+        width: 345,
+        height: 650,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        backgroundColor: "#dce0e6",
     },
     media: {
         height: 0,
         paddingTop: '56.25%', // 16:9
     },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
+    director: {
+        margin: theme.spacing(2),
     },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
-    avatar: {
-        backgroundColor: red[500],
-    },
+    content: {
+        alignSelf: "center",
+    }
 }));
 
 const MovieCard = ({ movie }) => {
@@ -47,18 +36,24 @@ const MovieCard = ({ movie }) => {
     return (
         <Card className={classes.root}>
             <CardHeader
-                title={movie.Title}
-                subheader={movie.Year}
+                title={movie.title}
             />
             <CardMedia
                 className={classes.media}
-                image={movie.Poster === "N/A" ? notAvailable : movie.Poster}
+                image={movie.poster === "N/A" ? notAvailable : movie.poster}
                 title="poster"
             />
-            <CardContent>
+            <CardContent className={classes.content}>
+                <Typography
+                    variant="body1"
+                    color="textPrimary"
+                    component="h4"
+                    gutterBottom
+                >
+                    {`Directed by ${movie.director}`}
+                </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    This impressive paella is a perfect party dish and a fun meal to cook together with your
-                    guests. Add 1 cup of frozen peas along with the mussels, if you like.
+                    {movie.plot !== "N/A" ? movie.plot : "Plot is unavailable"}
                 </Typography>
             </CardContent>
         </Card>

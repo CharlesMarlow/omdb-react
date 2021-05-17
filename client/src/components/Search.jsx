@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
-import { fetchMovies } from "../shared/actions/movies";
+import { fetchMovies } from "../shared/api";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -22,16 +21,17 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Input = props => {
+const Search = ({ setMovies }) => {
     const classes = useStyles();
     const [term, setTerm] = useState("");
 
-    // const searchArtist = term => {
-    //     props.fetchMovies(term);
-    //     props.updateFavourites(term, props.userEmail);
-    // };
+    const searchMovies = async term => {
+        const filteredMovies = await fetchMovies(term);
+        console.log('FILTERED', filteredMovies);
+        setMovies(filteredMovies.data);
+    };
 
-    const onInputChange = event => {
+    const onInputChange = async event => {
         setTerm(event.target.value);
     };
 
@@ -64,7 +64,7 @@ const Input = props => {
                     variant="contained"
                     color="primary"
                     className={classes.button}
-                    // onClick={() => searchArtist(term)}
+                    onClick={() => searchMovies(term)}
                 >
                     Search
                 </Button>
@@ -73,13 +73,4 @@ const Input = props => {
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        movies: state.movies,
-    };
-};
-
-export default connect(
-    mapStateToProps,
-    { fetchMovies }
-)(Input);
+export default Search;
