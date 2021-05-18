@@ -1,40 +1,35 @@
-const request = require('supertest');
-const app = require('../index');
-const {getMoviesFromDb, getMoviesFromApi} = require('../api/api');
+const request = require("supertest");
+const app = require("../index");
+const {dbClose, dbConnect} = require("../dbConnect");
+const {getMoviesFromDb} = require("../api/api");
 
-describe('API calls', () => {
+describe("Routes tests", () => {
+    describe("Test creating and fetching data from DB", () => {
 
-    describe('Test storage of data coming from external API', () => {
-        // setup()
-        it('Fetch data from api and store in DB', async (done) => {
-            jest.useFakeTimers()
-            let data = {
-                id: '12345678',
-                title: 'los abrazos rotos',
-                director: 'Pedro Almodovar',
-                plot: 'una pelicula muy bien',
-                poster: 'N/A',
-                imdbId: '123456',
-                runtime: '1:47:54',
-                release_date: 'March 24th, 2009',
-                actors: 'Penelope Cruz',
-                language: 'Spanish',
-            };
-            try {
-                request(app).post('/').send(data)
-                    .expect(200)
-                    .then((response) => {
-                        // console.log('RES', response);
+        beforeEach(async () => await dbConnect());
 
-                        expect(response.body).toEqual({ "success": false })
-                        done();
-                    })
-            } catch (err) {
-                console.log('ERROR', err);
-                done();
-            } finally {
-                done()
-            }
-        })
-    })
+        afterEach(async () => await dbClose());
+
+        it("Should store in DB", async (done) => {
+            const res = await request(app).post("/");
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual({success: true});
+            done();
+        });
+
+        it("Should fetch data from DB", async (done) => {
+            const res = await request(app).get('/');
+            expect(res.status).toBe(200);
+            expect(res.body.length).toEqual(10);
+            done();
+        });
+
+        it('Should fetch data from DB with search term', async (done) => {
+            const director = "Hirohisa Sasaki";
+            const res = await getMoviesFromDb(director);
+            expect(res.length).toBe(1);
+            expect(res[0].director).toBe(director);
+            done();
+        });
+    });
 });
