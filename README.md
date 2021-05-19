@@ -14,14 +14,14 @@ https://github.com/CharlesMarlow/omdb-react.git
 
 2. In order to run the server, when on root directory: 
  - cd server
- - run 
+ - run npm install and then:
  ```
   node index.js
  ```
  
 3. In order to run the client, when on root directory:
   - cd client
-  - run:
+  - run npm install and then:
    ``` 
   npm start
   ```
