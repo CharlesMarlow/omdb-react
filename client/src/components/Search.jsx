@@ -27,7 +27,6 @@ const Search = ({ setMovies }) => {
 
     const searchMovies = async term => {
         const filteredMovies = await fetchMovies(term);
-        console.log('FILTERED', filteredMovies);
         setMovies(filteredMovies.data);
     };
 

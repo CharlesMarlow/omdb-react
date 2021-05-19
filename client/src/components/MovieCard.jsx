@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
 
 const MovieCard = ({ movie }) => {
     const classes = useStyles();
-    console.log('CARD MOVIES', movie);
     return (
         <Card className={classes.root}>
             <CardHeader
