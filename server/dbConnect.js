@@ -1,5 +1,6 @@
 const mongoose  = require('mongoose');
-const dbUrl = 'mongodb+srv://g:cassandradebugger@movies-db.hxxgl.mongodb.net/movies-db?retryWrites=true&w=majority';
+const DB_PASS = require("./config/env");
+const dbUrl = `mongodb+srv://g:${DB_PASS}@movies-db.hxxgl.mongodb.net/movies-db?retryWrites=true&w=majority`;
 
 const dbConnect = () => {
     mongoose.connect(dbUrl, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false})
