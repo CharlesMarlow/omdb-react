@@ -14,26 +14,26 @@ https://github.com/CharlesMarlow/omdb-react.git
 
 2. In order to run the server, when on root directory: 
  - cd server
- - run ```bash
+ - run ```
   node index.js
  ```
  
 3. In order to run the client, when on root directory:
   - cd client
-  - run ```bash 
-    npm start
+  - run ``` 
+  npm start
   ```
 
 4. In order to run the tests, when on root directory: 
   - cd server
-  - run ```bash 
-    npm test
+  - run ``` 
+  npm test
   ```
   
 5. Alterintavely, when on root directory, one can run both instances with: 
 
-```bash
-  ./init.sh
+``` 
+./init.sh 
 ```
 
 ## Architecture & Approaches
