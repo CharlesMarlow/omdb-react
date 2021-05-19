@@ -21,14 +21,14 @@ https://github.com/CharlesMarlow/omdb-react.git
  
 3. In order to run the client, when on root directory:
   - cd client
-  - run
+  - run:
    ``` 
   npm start
   ```
 
 4. In order to run the tests, when on root directory: 
   - cd server
-  - run 
+  - run:
   ``` 
   npm test
   ```
