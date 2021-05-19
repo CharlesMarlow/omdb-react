@@ -64,8 +64,7 @@ as a standalone, the search input and ite accompanying submit button, the header
 Due to this, I decided to bring in the Material-ui design library, to keep the CSS scoped for each component, yet still work 
 with the same UI components the library provides, and mainly the same rules and styling attributes, so that the client will have 
 a solidified and readable language. 
-I find this to be crucial in the smallest of projects, due to bad experience in the past, when working on projects where each 
-and every component turned into a mess that was hard to work with and add on to. 
+I find this to be crucial even in the smallest of projects, as CSS can become a challenge when it is left disorganised. 
 
 
 ## License
